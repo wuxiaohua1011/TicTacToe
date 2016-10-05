@@ -56,21 +56,21 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_00" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_01" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_02" />
         </LinearLayout>
 
@@ -83,21 +83,21 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_10" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_11" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_12" />
         </LinearLayout>
 
@@ -110,21 +110,21 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_20" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_12" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/blank_black_background"
+
                 android:id="@+id/PvpActivity_imageButton_22" />
         </LinearLayout>
     </LinearLayout>

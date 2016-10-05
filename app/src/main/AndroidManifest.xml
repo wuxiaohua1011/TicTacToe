@@ -15,7 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PvpActivity"></activity>
+        <activity android:name=".PvpActivity" />
+        <activity android:name=".PickYourIconActivity"></activity>
     </application>
 
 </manifest>
