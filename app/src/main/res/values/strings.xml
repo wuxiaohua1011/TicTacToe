@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TicTacToe</string>
+    <string name="activity_pvp_button_back">Back</string>
+    <string name="activity_pvp_textView_player1">Player1 =  </string>
+    <string name="activity_pvp_textView_player2">Player2 =</string>
+    <string name="activity_main_button_play_game">Play Game</string>
 </resources>
