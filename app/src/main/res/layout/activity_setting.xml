@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_setting_imageView_player_1"
-            android:background="@mipmap/O"/>
+            android:background="@mipmap/o"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/activity_setting_imageView_player2"
-            android:background="@mipmap/X"/>
+            android:background="@mipmap/x"/>
     </LinearLayout>
 
 </RelativeLayout>
