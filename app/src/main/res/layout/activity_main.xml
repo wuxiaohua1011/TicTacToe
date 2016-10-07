@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,24 +7,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.michaelwu.tictactoe.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.michaelwu.tictactoe.MainActivity"
+    android:gravity="center_vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textSize="50sp"
+        android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView3" />
+        android:id="@+id/activity_main_textview_tictactoe"
+        android:textColor="@color/abc_search_url_text_normal"
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/activity_main_button_play_game"
-        android:id="@+id/activity_main_play_game"
-        android:layout_below="@+id/textView3"
+        android:id="@+id/activity_main_button_play_game"
+        android:layout_below="@+id/activity_main_textview_tictactoe"
         android:layout_centerHorizontal="true"
-        android:onClick="activity_main_button_play_game_clicked"/>
+        android:layout_gravity="center_horizontal"
+        android:onClick="activity_main_button_play_game_clicked"
+        android:singleLine="false" />
 
-</RelativeLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/activity_main_button_settings" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_main_button_rate_this_app"
+        android:layout_gravity="center_horizontal"
+        android:text="Rate this app" />
+
+</LinearLayout>
