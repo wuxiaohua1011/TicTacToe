@@ -17,4 +17,5 @@ public class MainActivity extends AppCompatActivity {
     public void activity_main_button_play_game_clicked(View view) {
         startActivity(new Intent(this,PvpActivity.class));finish();
     }
+    //better comment
 }
