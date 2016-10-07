@@ -11,7 +11,8 @@
         android:text="@string/activity_setting_button_back"
         android:id="@+id/activity_setting_button_back"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="activity_setting_button_player_1_clicked"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -45,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/activity_setting_change_player_2_icon"
-            android:id="@+id/activity_setting_button_change_player_2_icon" />
+            android:id="@+id/activity_setting_button_change_player_2_icon"
+            android:onClick="activity_setting_button_player_2_clicked"/>
 
         <ImageView
             android:layout_width="wrap_content"
