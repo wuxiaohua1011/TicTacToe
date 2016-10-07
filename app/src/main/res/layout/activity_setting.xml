@@ -12,7 +12,7 @@
         android:id="@+id/activity_setting_button_back"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:onClick="activity_setting_button_player_1_clicked"/>
+        android:onClick="activity_setting_button_back_clicked"/>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -29,8 +29,8 @@
             android:id="@+id/activity_setting_button_change_player_1_icon" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/activity_setting_imageView_player_1"
             android:background="@mipmap/o"/>
     </LinearLayout>
@@ -50,8 +50,8 @@
             android:onClick="activity_setting_button_player_2_clicked"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/activity_setting_imageView_player2"
             android:background="@mipmap/x"/>
     </LinearLayout>

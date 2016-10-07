@@ -20,4 +20,8 @@ public class SettingActivity extends Activity {
     public void activity_setting_button_player_2_clicked(View view) {
         startActivity(new Intent(this, PickYourIconActivity.class));finish();
     }
+
+    public void activity_setting_button_back_clicked(View view) {
+        startActivity(new Intent(this,MainActivity.class));finish();
+    }
 }
