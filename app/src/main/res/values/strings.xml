@@ -4,4 +4,8 @@
     <string name="activity_pvp_textView_player1">Player1 =  </string>
     <string name="activity_pvp_textView_player2">Player2 =</string>
     <string name="activity_main_button_play_game">Play Game</string>
+    <string name="activity_setting_change_player_1_icon">Change Player 1 Icon</string>
+    <string name="activity_setting_change_player_2_icon">CHANGE PLAYER 2 ICON</string>
+    <string name="activity_setting_button_back">Back</string>
+    <string name="activity_main_button_settings">Settings</string>
 </resources>
