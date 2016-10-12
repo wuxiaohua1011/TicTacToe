@@ -45,7 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/PvpActivity_button_back"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout2">
 
         <LinearLayout
             android:orientation="vertical"
@@ -128,4 +129,18 @@
                 android:id="@+id/PvpActivity_imageButton_22" />
         </LinearLayout>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView1"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView2"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_alignStart="@+id/textView" />
 </RelativeLayout>

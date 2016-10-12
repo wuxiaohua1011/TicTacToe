@@ -36,7 +36,7 @@ private Button backButton, player1Button,player2Button;
         switch (view.getId()){
             case R.id.activity_setting_button_back:startActivity(new Intent(this,MainActivity.class));finish();break;
             case R.id.activity_setting_button_change_player_1_icon:startActivity(new Intent(this,PickYourIconActivityPlayer1.class));finish();break;
-            case R.id.activity_setting_button_change_player_2_icon:startActivity(new Intent(this,PickYourIconActivityPlayer1.class));finish();break;
+            case R.id.activity_setting_button_change_player_2_icon:startActivity(new Intent(this,PickYourIconActivityPlayer2.class));finish();break;
             default:
                 Toast.makeText(SettingActivity.this, "Something is wrong", Toast.LENGTH_SHORT).show();break;
         }
