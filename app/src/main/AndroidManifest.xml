@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.michaelwu.tictactoe">
-    <uses-feature android:name="android.hardware.camera2"></uses-feature>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+
+    <uses-feature android:name="android.hardware.camera2" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -18,8 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".PvpActivity" />
-        <activity android:name=".PickYourIconActivity"></activity>
-        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".PickYourIconActivityPlayer1" />
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".PickYourIconActivityPlayer2"></activity>
     </application>
 
 </manifest>

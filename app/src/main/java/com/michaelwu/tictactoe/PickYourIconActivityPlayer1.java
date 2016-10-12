@@ -1,6 +1,7 @@
 package com.michaelwu.tictactoe;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,21 +14,21 @@ import android.widget.Toast;
 
 import java.io.File;
 
-public class PickYourIconActivity extends AppCompatActivity implements View.OnClickListener{
+public class PickYourIconActivityPlayer1 extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
     private ImageButton cameraButton;
     static final int CAM_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pick_your_icon);
+        setContentView(R.layout.activity_pick_your_icon_player_1);
         wireWidget();
         setListener();
     }
 
     private void wireWidget() {
-       backButton=(Button)findViewById(R.id.pick_your_icon_activity_button_back);
-        cameraButton = (ImageButton) findViewById(R.id.settingActivity_imageButton_selfie);
+       backButton=(Button)findViewById(R.id.activity_pick_your_icon_player_1_button_back);
+        cameraButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_selfie);
     }
 
     private void setListener() {
@@ -39,14 +40,14 @@ public class PickYourIconActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.pick_your_icon_activity_button_back:startActivity(new Intent(this,SettingActivity.class));finish();break;
-            case R.id.settingActivity_imageButton_selfie:
+            case R.id.activity_pick_your_icon_player_1_button_back:startActivity(new Intent(this,SettingActivity.class));finish();break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_selfie:
                 Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = getFile();
                 camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                 startActivityForResult(camera_intent, CAM_REQUEST);break;
             default:
-                Toast.makeText(PickYourIconActivity.this, "Something Wrong happened", Toast.LENGTH_SHORT).show();break;
+                Toast.makeText(PickYourIconActivityPlayer1.this, "Something Wrong happened", Toast.LENGTH_SHORT).show();break;
 
         }
 
@@ -71,5 +72,9 @@ public class PickYourIconActivity extends AppCompatActivity implements View.OnCl
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String path = "sdcard/camera_app/cam_image.jpg";
         cameraButton.setBackground(Drawable.createFromPath(path));
+        SharedPreferences sharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("player1pic",path);
+        editor.commit();
     }
 }
