@@ -17,6 +17,7 @@ import java.io.File;
 public class PickYourIconActivityPlayer1 extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
     private ImageButton cameraButton;
+    private ImageButton lizardButton, corgiButton, kittenButton, teslaButton, bunnyButton, clownButton, xButton, oButton;
     static final int CAM_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +30,34 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
     private void wireWidget() {
        backButton=(Button)findViewById(R.id.activity_pick_your_icon_player_1_button_back);
         cameraButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_selfie);
+        lizardButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_lizard);
+        corgiButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_corgi);
+        kittenButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_kitten);
+        teslaButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_tesla);
+        bunnyButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_bunny);
+        clownButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_clown);
+        oButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_O);
+        xButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_1_imageButton_X);
     }
 
     private void setListener() {
         backButton.setOnClickListener(this);
         cameraButton.setOnClickListener(this);
+        lizardButton.setOnClickListener(this);
+        corgiButton.setOnClickListener(this);
+        kittenButton.setOnClickListener(this);
+        teslaButton.setOnClickListener(this);
+        bunnyButton.setOnClickListener(this);
+        clownButton.setOnClickListener(this);
+        oButton.setOnClickListener(this);
+        xButton.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View view) {
+        SharedPreferences player1SharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
+        SharedPreferences.Editor editor = player1SharedPreferences.edit();
         switch (view.getId()){
             case R.id.activity_pick_your_icon_player_1_button_back:startActivity(new Intent(this,SettingActivity.class));finish();break;
             case R.id.activity_pick_your_icon_player_1_imageButton_selfie:
@@ -46,6 +65,38 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
                 File file = getFile();
                 camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                 startActivityForResult(camera_intent, CAM_REQUEST);break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_lizard:
+                editor.putInt("player1pic",R.drawable.lizard);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_corgi:
+                editor.putInt("player1pic",R.drawable.corgi);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_kitten:
+                editor.putInt("player1pic",R.drawable.kitten);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_tesla:
+                editor.putInt("player1pic",R.drawable.tesla);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_bunny:
+                editor.putInt("player1pic",R.drawable.bunny);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_clown:
+                editor.putInt("player1pic",R.drawable.clown);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_X:
+                editor.putInt("player1pic",R.drawable.x);
+                editor.commit();
+                break;
+            case R.id.activity_pick_your_icon_player_1_imageButton_O:
+                editor.putInt("player1pic",R.drawable.o);
+                editor.commit();
+                break;
             default:
                 Toast.makeText(PickYourIconActivityPlayer1.this, "Something Wrong happened", Toast.LENGTH_SHORT).show();break;
 
