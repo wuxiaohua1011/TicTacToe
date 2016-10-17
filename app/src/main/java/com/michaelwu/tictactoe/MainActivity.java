@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void activity_main_button_play_game_clicked(View view) {
         startActivity(new Intent(this, PvpActivity.class));
-        finish();
+
     }
 
     //TODO: toggle the rating bar when rate this app is clicked.
@@ -70,6 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void activity_main_button_setting_clicked(View view) {
         startActivity(new Intent(this,SettingActivity.class));
-        finish();
+
     }
 }
