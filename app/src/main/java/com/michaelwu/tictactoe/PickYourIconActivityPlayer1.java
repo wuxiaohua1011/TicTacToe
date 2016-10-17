@@ -66,35 +66,35 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
                 camera_intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
                 startActivityForResult(camera_intent, CAM_REQUEST);break;
             case R.id.activity_pick_your_icon_player_1_imageButton_lizard:
-                editor.putInt("player1pic",R.drawable.lizard);
+                editor.putString("player1pic","" + R.drawable.lizard);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_corgi:
-                editor.putInt("player1pic",R.drawable.corgi);
+                editor.putString("player1pic","" + R.drawable.corgi);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_kitten:
-                editor.putInt("player1pic",R.drawable.kitten);
+                editor.putString("player1pic","" + R.drawable.kitten);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_tesla:
-                editor.putInt("player1pic",R.drawable.tesla);
+                editor.putString("player1pic","" + R.drawable.tesla);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_bunny:
-                editor.putInt("player1pic",R.drawable.bunny);
+                editor.putString("player1pic","" + R.drawable.bunny);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_clown:
-                editor.putInt("player1pic",R.drawable.clown);
+                editor.putString("player1pic","" + R.drawable.clown);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_X:
-                editor.putInt("player1pic",R.drawable.x);
+                editor.putString("player1pic","" + R.drawable.x);
                 editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_O:
-                editor.putInt("player1pic",R.drawable.o);
+                editor.putString("player1pic","" + R.drawable.o);
                 editor.commit();
                 break;
             default:

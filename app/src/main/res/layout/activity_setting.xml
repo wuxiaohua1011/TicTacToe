@@ -50,7 +50,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/activity_setting_imageView_player2"
+            android:id="@+id/activity_setting_imageView_player_2"
             android:background="@mipmap/x"/>
     </LinearLayout>
 

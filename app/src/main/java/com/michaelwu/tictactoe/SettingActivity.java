@@ -14,6 +14,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
 private Button backButton, player1Button,player2Button;
     private ImageView player1ImageView, player2ImageView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,33 +23,46 @@ private Button backButton, player1Button,player2Button;
         addListener();
 
 
+        SharedPreferences player1Icon = getSharedPreferences("player1pic", MODE_PRIVATE);
+        String path = player1Icon.getString("player1pic", "nothing");
 
-        SharedPreferences player1Icon = getSharedPreferences("player1pic",MODE_PRIVATE);
-        int intPath = player1Icon.getInt("player1pic",0);
-        if (intPath == 0){
-            String stringPath=player1Icon.getString("player1pic","no path found");
-            if (stringPath.equals("no path found")){
-                Toast.makeText(SettingActivity.this, "problem occured", Toast.LENGTH_SHORT).show();
+        if (!path.equals("nothing")) {
+            if (path.contains("sd")) {
+                player1ImageView.setBackground(Drawable.createFromPath(path));
+            } else {
+                int pathInt = Integer.parseInt(path);
+                player1ImageView.setBackgroundResource(pathInt);
             }
-            else{
-                player1ImageView.setBackground(Drawable.createFromPath(stringPath));
-            }
-        }
-        else{
-            player1ImageView.setBackground(Drawable.createFromPath(player1Icon.getString("player1pic","nothing is found")));
+        } else {
+            Toast.makeText(SettingActivity.this, "noPicSelected", Toast.LENGTH_SHORT).show();
         }
 
 
 
+        SharedPreferences player2Icon = getSharedPreferences("player2pic", MODE_PRIVATE);
+        String path2 = player2Icon.getString("player2pic", "nothing");
 
+        if (!path2.equals("nothing")) {
+            if (path2.contains("sd")) {
+                player2ImageView.setBackground(Drawable.createFromPath(path2));
+            } else {
+                int pathInt2 = Integer.parseInt(path2);
+                player2ImageView.setBackgroundResource(pathInt2);
+            }
+        } else {
+            Toast.makeText(SettingActivity.this, "noPicSelected", Toast.LENGTH_SHORT).show();
+        }
     }
+
+
+
 
     private void wireWidget() {
         backButton=(Button)findViewById(R.id.activity_setting_button_back);
         player1Button=(Button)findViewById(R.id.activity_setting_button_change_player_1_icon);
         player2Button=(Button)findViewById(R.id.activity_setting_button_change_player_2_icon);
         player1ImageView = (ImageView) findViewById(R.id.activity_setting_imageView_player_1);
-        player2ImageView = (ImageView) findViewById(R.id.activity_setting_imageView_player2);
+        player2ImageView = (ImageView) findViewById(R.id.activity_setting_imageView_player_2);
     }
 
     private void addListener() {
