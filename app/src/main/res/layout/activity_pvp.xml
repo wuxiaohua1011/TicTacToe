@@ -125,7 +125,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
-
                 android:id="@+id/PvpActivity_imageButton_22" />
         </LinearLayout>
     </LinearLayout>
@@ -137,10 +136,13 @@
         android:layout_below="@+id/linearLayout2"
         android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/imageView2"
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/activity_pvp_textView_timeConstraint"
         android:layout_below="@+id/linearLayout2"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignEnd="@+id/textView" />
 </RelativeLayout>

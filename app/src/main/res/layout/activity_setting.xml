@@ -39,7 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout3">
 
         <Button
             android:layout_width="wrap_content"
@@ -53,5 +54,12 @@
             android:id="@+id/activity_setting_imageView_player_2"
             android:background="@mipmap/x"/>
     </LinearLayout>
+
+    <NumberPicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_setting_numberPicker_time"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
