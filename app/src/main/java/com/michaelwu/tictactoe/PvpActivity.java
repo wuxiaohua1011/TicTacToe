@@ -18,11 +18,12 @@ import android.widget.Toast;
 public class PvpActivity extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
     private ImageButton imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,imageButton12,imageButton20,imageButton21,imageButton22;
-    private TextView timeConstraintTextView,player1Score, player2Score;
+    private TextView timeConstraintTextView,player1Score, player2Score,playerTurnTextView;
     private CountDownTimer countDownTimer;
     private int playerTurn = 1, timeConstraint;
     private VirtualGameBoard gameBoard;
     private int player1IconResourcePath,player2IconResourcePath;
+    private boolean countDownTimerStarted= false;
 
 
     @Override
@@ -31,6 +32,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_pvp);
         wireWidget();
         addListener();
+
         importTimeConstraint();
         importPlayer1Icon();
         importPlayer2Icon();
@@ -75,6 +77,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     private void startNewGame() {
         activateAllImageButton();
         gameBoard=new VirtualGameBoard();
+
     }
 
    //// TODO: 10/18/2016 tell the girls to implement scoring system
@@ -82,6 +85,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     //// TODO: 10/17/2016 fix the issue of  "The application may be doing too much work on its main thread."
     //// TODO: 10/18/2016 fix the camera problem
     //// TODO: 10/18/2016 ask mr shorr why the hell my phone does not run this app
+    //// TODO: 10/19/2016 why is setText not working?????????
     private void importPlayer2Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
@@ -123,6 +127,8 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         timeConstraintTextView = (TextView)findViewById(R.id.activity_pvp_textView_timeConstraint);
         player1Score = (TextView)findViewById(R.id.PvpActivity_textView_player1_score);
         player2Score=(TextView)findViewById(R.id.PvpActivity_textView_player2_score);
+        playerTurnTextView=(TextView)findViewById(R.id.activity_pvp_textView_player_turn);
+        playerTurnTextView.setText("asdf");
 
     }
     private void switchPlayer(){
@@ -149,6 +155,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     private void importTimeConstraint(){
         SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
         timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
+        timeConstraintTextView.setText(""+timeConstraint);
     }
     private void tempWait() {
         new CountDownTimer(4000, 1000) {
@@ -161,10 +168,31 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             }
         }.start();
     }
+//   private void activateCountdownTimer(){
+//        countDownTimerStarted=true;
+//        countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                timeConstraintTextView.setText("Time Left: "+ timeConstraint );
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
+//                countDownTimerStarted=false;
+//            }
+//        }.start();
+//    }
+//    private void cancelCountdownTimer(){
+//        if (countDownTimerStarted){
+//            countDownTimer.cancel();
+//        }
+//    }
 
     @Override
     public void onClick(View v) {
-        //region Activated when you click something
+
+        //region Activated when you click a button
         switch (v.getId())
         {
             case R.id.PvpActivity_button_back:
@@ -172,7 +200,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
             case R.id.PvpActivity_imageButton_00:
                 //region ImageButton00 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton00.setBackgroundResource(player1IconResourcePath);
                 }
@@ -189,11 +217,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     startNewGame();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_01:
                 //region imageButton01 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton01.setBackgroundResource(player1IconResourcePath);
                 }
@@ -210,11 +239,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_02:
                 //region imageButton02 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton02.setBackgroundResource(player1IconResourcePath);
                 }
@@ -232,11 +262,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_10:
                 //region ImageButton10 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton10.setBackgroundResource(player1IconResourcePath);
                 }
@@ -253,11 +284,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_11:
                 //region ImageButton11 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton11.setBackgroundResource(player1IconResourcePath);
                 }
@@ -274,11 +306,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_12:
                 //region ImageButton12 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton12.setBackgroundResource(player1IconResourcePath);
                 }
@@ -294,12 +327,13 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
                     tempWait();
                 }
-                switchPlayer();
+                switchPlayer();playerTurnTextView.setText("Player " + playerTurn + "'s turn");
+
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_20:
                 //region ImageButton20 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton20.setBackgroundResource(player1IconResourcePath);
                 }
@@ -316,11 +350,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_21:
                 //region ImageButton21 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton21.setBackgroundResource(player1IconResourcePath);
                 }
@@ -337,11 +372,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             case R.id.PvpActivity_imageButton_22:
                 //region imageButton22 Execution
-                countDownTimer.cancel();
+
                 if (playerTurn == 1){
                     imageButton22.setBackgroundResource(player1IconResourcePath);
                 }
@@ -358,25 +394,16 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                     tempWait();
                 }
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
             default:
                 Toast.makeText(PvpActivity.this, "Oops, something is wrong", Toast.LENGTH_SHORT).show();
         }
         //endregion
-        //region Activate countDownTimer
-        countDownTimer = new CountDownTimer(timeConstraint,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeConstraintTextView.setText(""+ (int) millisUntilFinished/1000 );
-            }
 
-            @Override
-            public void onFinish() {
-                switchPlayer();
-            }
-        }.start();
-        //endregion
+
+
     }
 
 

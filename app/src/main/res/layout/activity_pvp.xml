@@ -139,4 +139,11 @@
         android:id="@+id/activity_pvp_textView_timeConstraint"
         android:layout_below="@+id/linearLayout2"
         android:layout_alignEnd="@+id/PvpActivity_textView_player1_score" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_pvp_textView_player_turn"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_toStartOf="@+id/PvpActivity_textView_player1_score" />
 </RelativeLayout>
