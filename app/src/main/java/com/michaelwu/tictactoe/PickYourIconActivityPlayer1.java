@@ -59,7 +59,7 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
         SharedPreferences player1SharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
         SharedPreferences.Editor editor = player1SharedPreferences.edit();
         switch (view.getId()){
-            case R.id.activity_pick_your_icon_player_1_button_back:finish();break;
+            case R.id.activity_pick_your_icon_player_1_button_back:startActivity(new Intent(this,SettingActivity.class));finish();break;
             case R.id.activity_pick_your_icon_player_1_imageButton_selfie:
                 Intent camera_intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 File file = getFile();
@@ -67,35 +67,35 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
                 startActivityForResult(camera_intent, CAM_REQUEST);break;
             case R.id.activity_pick_your_icon_player_1_imageButton_lizard:
                 editor.putString("player1pic","" + R.drawable.lizard);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_corgi:
                 editor.putString("player1pic","" + R.drawable.corgi);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_kitten:
                 editor.putString("player1pic","" + R.drawable.kitten);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_tesla:
                 editor.putString("player1pic","" + R.drawable.tesla);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_bunny:
                 editor.putString("player1pic","" + R.drawable.bunny);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_clown:
                 editor.putString("player1pic","" + R.drawable.clown);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_X:
                 editor.putString("player1pic","" + R.drawable.x);
-                editor.commit();finish();
+                editor.commit();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_O:
                 editor.putString("player1pic","" + R.drawable.o);
-                editor.commit();finish();
+                editor.commit();
                 break;
             default:
                 Toast.makeText(PickYourIconActivityPlayer1.this, "Something Wrong happened", Toast.LENGTH_SHORT).show();break;
