@@ -13,8 +13,9 @@ import android.widget.ImageView;
  *
  *
  * KEY to *position*
- * 0 = no background picture found
- * 1 = background picture found
+ * 0 = not picked
+ * 1 = picked by player1
+ * 2 = picked by player2
  * Created by micha on 10/17/2016.
  */
 
@@ -22,81 +23,52 @@ import android.widget.ImageView;
 public class VirtualGameBoard {
 
 
-    private int imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,imageButton12,imageButton20,imageButton21,imageButton22;
+    private int[][] gameBoard;
 
-    public VirtualGameBoard(ImageButton imageButton00, ImageButton imageButton01, ImageButton imageButton02,
-                            ImageButton imageButton10, ImageButton imageButton11, ImageButton imageButton12,
-                            ImageButton imageButton20, ImageButton imageButton21, ImageButton imageButton22){
-        this.imageButton00 = checkImage(imageButton00);
-        this.imageButton01 = checkImage(imageButton01);
-        this.imageButton02 = checkImage(imageButton02);
-        this.imageButton10 = checkImage(imageButton10);
-        this.imageButton11 = checkImage(imageButton11);
-        this.imageButton12 = checkImage(imageButton12);
-        this.imageButton20 = checkImage(imageButton20);
-        this.imageButton21 = checkImage(imageButton21);
-        this.imageButton22 = checkImage(imageButton22);
-
-
-
+    public VirtualGameBoard(){
+        gameBoard=new int[3][3];
     }
-    public void checkGameBoard(ImageButton imageButton00, ImageButton imageButton01, ImageButton imageButton02,
-                               ImageButton imageButton10, ImageButton imageButton11, ImageButton imageButton12,
-                               ImageButton imageButton20, ImageButton imageButton21, ImageButton imageButton22){
-        this.imageButton00 = checkImage(imageButton00);
-        this.imageButton01 = checkImage(imageButton01);
-        this.imageButton02 = checkImage(imageButton02);
-        this.imageButton10 = checkImage(imageButton10);
-        this.imageButton11 = checkImage(imageButton11);
-        this.imageButton12 = checkImage(imageButton12);
-        this.imageButton20 = checkImage(imageButton20);
-        this.imageButton21 = checkImage(imageButton21);
-        this.imageButton22 = checkImage(imageButton22);
-
-    }
-    private int checkImage(ImageButton imageButton) {
-        if (imageButton.isClickable()){
-            return 0; // if isClickable() return true, that means that imageButton has not been clicked, that means no image should display
-        }
-        else{
-            return 1;
-        }
+    public void updateGameBoard(String code){
+        int row = Integer.parseInt(code.substring(0,1));
+        int col = Integer.parseInt(code.substring(1,2));
+        int player = Integer.parseInt(code.substring(2));
+        gameBoard[row][col]=player;
     }
 
-    public boolean detectWin(){
+    public boolean detectWin(int player){
         //vertical wins
-        if (imageButton00 == 1 && imageButton10 == 1 && imageButton20 == 1){
+        if (gameBoard[0][0] == player && gameBoard[1][0] == player && gameBoard[2][0] == player){
             return true;
         }
-        if (imageButton01 == 1 && imageButton11 == 1 && imageButton21 == 1){
+        if (gameBoard[0][1] == player && gameBoard[1][1]== player && gameBoard[2][1] == player){
             return true;
         }
-        if (imageButton02 == 1 && imageButton12 == 1 && imageButton22 == 1){
+        if (gameBoard[0][2] == player && gameBoard[1][2]== player && gameBoard[2][2]== player){
             return true;
         }
         //horizontal wins
-        if (imageButton00 == 1 && imageButton01 == 1 && imageButton02 == 1){
+        if (gameBoard[0][0] == player && gameBoard[0][1]== player&& gameBoard[0][2] == player){
             return true;
         }
-        if (imageButton10 == 1 && imageButton11 == 1 && imageButton12 == 1){
+        if (gameBoard[1][0] == player && gameBoard[1][1]== player && gameBoard[1][2]== player){
             return true;
         }
-        if (imageButton20 == 1 && imageButton21 == 1 && imageButton22 == 1){
+        if (gameBoard[2][0]== player && gameBoard[2][1]== player && gameBoard[2][2]== player){
             return true;
         }
         //diagnoal wins
-        if (imageButton00 == 1 && imageButton11 == 1 && imageButton22 == 1){
+        if (gameBoard[0][0]== player && gameBoard[1][1]== player && gameBoard[2][2]== player){
             return true;
         }
-        if (imageButton02 == 1 && imageButton11 == 1 && imageButton02 == 1){
+        if (gameBoard[0][2] == player && gameBoard[1][1]== player && gameBoard[2][0]== player){
             return true;
         }
         return false;
     }
     public boolean detectDraw(){
-        if (imageButton00==1 &&imageButton01==1 &&imageButton02==1 &&
-                imageButton10==1 &&imageButton11==1 &&imageButton12==1 &&
-                imageButton20==1 &&imageButton21==1 &&imageButton22==1){
+        if ( (gameBoard[0][0]==1 || gameBoard[0][0]==2) && (gameBoard[0][1] == 1 || gameBoard[0][1] == 2) && (gameBoard[0][2]==1 || gameBoard[0][2] == 2) &&
+                (gameBoard[1][0] == 1 || gameBoard[1][0]==2) && (gameBoard[1][1]==1 || gameBoard[1][1] == 2) && (gameBoard[1][2]== 1 ||gameBoard[1][2] == 2)&&
+                (gameBoard[2][0] == 1 || gameBoard[2][0] == 2) && (gameBoard[2][1] == 1 || gameBoard[2][1] == 2) && (gameBoard[2][2] == 1 || gameBoard[2][2] == 2)){
             return true;
         }
         else{

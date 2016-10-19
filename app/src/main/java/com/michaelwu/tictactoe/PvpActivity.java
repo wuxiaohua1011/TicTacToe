@@ -16,12 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class PvpActivity extends AppCompatActivity implements View.OnClickListener{
-    private ImageView imageView1;
     private Button backButton;
     private ImageButton imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,imageButton12,imageButton20,imageButton21,imageButton22;
     private TextView timeConstraintTextView,player1Score, player2Score;
     private CountDownTimer countDownTimer;
-    private int playerTurn = 1;
+    private int playerTurn = 1, timeConstraint;
     private VirtualGameBoard gameBoard;
     private int player1IconResourcePath,player2IconResourcePath;
 
@@ -32,10 +31,10 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_pvp);
         wireWidget();
         addListener();
+        importTimeConstraint();
         importPlayer1Icon();
         importPlayer2Icon();
-        gameBoard= new VirtualGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                imageButton12,imageButton20,imageButton21,imageButton22);
+        startNewGame();
 //        temp22= (ImageButton)findViewById(R.id.PvpActivity_imageButton_22);
 //        timeConstraintTextView = (TextView)findViewById(R.id.activity_pvp_textView_timeConstraint);
 //
@@ -72,9 +71,17 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
 //tp
     }
-//// TODO: 10/17/2016 find out how to clear the game once "win" situation is detected 
+
+    private void startNewGame() {
+        activateAllImageButton();
+        gameBoard=new VirtualGameBoard();
+    }
+
+   //// TODO: 10/18/2016 tell the girls to implement scoring system
     //// TODO: 10/17/2016 make everything clearer, add comments, implement more methods rather than writing each procedure over and over again 
-    //// TODO: 10/17/2016 fix the issue of  "The application may be doing too much work on its main thread." 
+    //// TODO: 10/17/2016 fix the issue of  "The application may be doing too much work on its main thread."
+    //// TODO: 10/18/2016 fix the camera problem
+    //// TODO: 10/18/2016 ask mr shorr why the hell my phone does not run this app
     private void importPlayer2Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
@@ -83,7 +90,6 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
         }
     }
-
     private void importPlayer1Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player1pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player1pic","nothing");
@@ -91,8 +97,6 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             player1IconResourcePath = Integer.parseInt(path);
         }
     }
-
-
     private void addListener() {
         backButton.setOnClickListener(this);
         imageButton00.setOnClickListener(this);
@@ -105,7 +109,6 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         imageButton21.setOnClickListener(this);
         imageButton22.setOnClickListener(this);
     }
-
     private void wireWidget() {
         imageButton00=(ImageButton)findViewById(R.id.PvpActivity_imageButton_00);
         imageButton01=(ImageButton)findViewById(R.id.PvpActivity_imageButton_01);
@@ -130,188 +133,251 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             playerTurn=1;
         }
     }
+    private void activateAllImageButton(){
+        imageButton00.setBackgroundResource(R.drawable.blank_background);imageButton00.setClickable(true);
+        imageButton01.setBackgroundResource(R.drawable.blank_background);imageButton01.setClickable(true);
+        imageButton02.setBackgroundResource(R.drawable.blank_background);imageButton02.setClickable(true);
+        imageButton10.setBackgroundResource(R.drawable.blank_background);imageButton10.setClickable(true);
+        imageButton20.setBackgroundResource(R.drawable.blank_background);imageButton20.setClickable(true);
+        imageButton11.setBackgroundResource(R.drawable.blank_background);imageButton11.setClickable(true);
+        imageButton22.setBackgroundResource(R.drawable.blank_background);imageButton22.setClickable(true);
+        imageButton12.setBackgroundResource(R.drawable.blank_background);imageButton12.setClickable(true);
+        imageButton21.setBackgroundResource(R.drawable.blank_background);imageButton21.setClickable(true);
+
+
+    }
+    private void importTimeConstraint(){
+        SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
+        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
+    }
+    private void tempWait() {
+        new CountDownTimer(4000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+            @Override
+            public void onFinish() {
+                startNewGame();
+            }
+        }.start();
+    }
 
     @Override
     public void onClick(View v) {
-
-        //create a new game board
-
-
-
+        //region Activated when you click something
         switch (v.getId())
         {
             case R.id.PvpActivity_button_back:
                 startActivity(new Intent(this,MainActivity.class));finish();break;
+
             case R.id.PvpActivity_imageButton_00:
-               imageButton00.setClickable(false);
-                if (playerTurn==1){
+                //region ImageButton00 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton00.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton00.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+               gameBoard.updateGameBoard("00"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    startNewGame();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    startNewGame();
                 }
                 switchPlayer();
                 break;
-
-
+            //endregion
             case R.id.PvpActivity_imageButton_01:
-                imageButton01.setClickable(false);
-                if (playerTurn==1){
+                //region imageButton01 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton01.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton01.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("01"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                    switchPlayer();
+                switchPlayer();
                 break;
+            //endregion
             case R.id.PvpActivity_imageButton_02:
-                imageButton02.setClickable(false);
-                if (playerTurn==1){
+                //region imageButton02 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton02.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton02.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("02"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
+
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
-
+            //endregion
             case R.id.PvpActivity_imageButton_10:
-                imageButton10.setClickable(false);
-                if (playerTurn==1){
+                //region ImageButton10 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton10.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton10.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("10"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
+            //endregion
             case R.id.PvpActivity_imageButton_11:
-                imageButton11.setClickable(false);
-                if (playerTurn==1){
+                //region ImageButton11 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton11.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton11.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("11"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
+            //endregion
             case R.id.PvpActivity_imageButton_12:
-                imageButton12.setClickable(false);
-                if (playerTurn==1){
+                //region ImageButton12 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton12.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton12.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("12"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
-
+            //endregion
             case R.id.PvpActivity_imageButton_20:
-                imageButton20.setClickable(false);
-                if (playerTurn==1){
+                //region ImageButton20 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton20.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton20.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("20"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
-
+            //endregion
             case R.id.PvpActivity_imageButton_21:
-                imageButton21.setClickable(false);
-                if (playerTurn==1){
+                //region ImageButton21 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton21.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton21.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("21"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
-
+            //endregion
             case R.id.PvpActivity_imageButton_22:
-                imageButton22.setClickable(false);
-                if (playerTurn==1){
+                //region imageButton22 Execution
+                countDownTimer.cancel();
+                if (playerTurn == 1){
                     imageButton22.setBackgroundResource(player1IconResourcePath);
                 }
                 else{
                     imageButton22.setBackgroundResource(player2IconResourcePath);
                 }
-                gameBoard.checkGameBoard(imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,
-                        imageButton12,imageButton20,imageButton21,imageButton22);
-                if (gameBoard.detectDraw() == true){
-                    Toast.makeText(PvpActivity.this, "draw", Toast.LENGTH_SHORT).show();
+                gameBoard.updateGameBoard("22"+ playerTurn);
+                if (gameBoard.detectWin(playerTurn)){
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
-                if (gameBoard.detectWin()==true){
-                    Toast.makeText(PvpActivity.this, "player" + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                if (gameBoard.detectDraw()){
+                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 switchPlayer();
                 break;
+            //endregion
             default:
                 Toast.makeText(PvpActivity.this, "Oops, something is wrong", Toast.LENGTH_SHORT).show();
         }
+        //endregion
+        //region Activate countDownTimer
+        countDownTimer = new CountDownTimer(timeConstraint,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeConstraintTextView.setText(""+ (int) millisUntilFinished/1000 );
+            }
+
+            @Override
+            public void onFinish() {
+                switchPlayer();
+            }
+        }.start();
+        //endregion
     }
+
+
 }
