@@ -4,14 +4,12 @@ package com.michaelwu.tictactoe;
  */
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -200,7 +198,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
             case R.id.PvpActivity_imageButton_00:
                 //region ImageButton00 Execution
-
+                imageButton00.setClickable(false);
                 if (playerTurn == 1){
                     imageButton00.setBackgroundResource(player1IconResourcePath);
                 }
@@ -222,7 +220,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_01:
                 //region imageButton01 Execution
-
+                imageButton01.setClickable(false);
                 if (playerTurn == 1){
                     imageButton01.setBackgroundResource(player1IconResourcePath);
                 }
@@ -244,7 +242,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_02:
                 //region imageButton02 Execution
-
+                imageButton02.setClickable(false);
                 if (playerTurn == 1){
                     imageButton02.setBackgroundResource(player1IconResourcePath);
                 }
@@ -267,7 +265,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_10:
                 //region ImageButton10 Execution
-
+                imageButton10.setClickable(false);
                 if (playerTurn == 1){
                     imageButton10.setBackgroundResource(player1IconResourcePath);
                 }
@@ -289,7 +287,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_11:
                 //region ImageButton11 Execution
-
+                imageButton11.setClickable(false);
                 if (playerTurn == 1){
                     imageButton11.setBackgroundResource(player1IconResourcePath);
                 }
@@ -311,7 +309,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_12:
                 //region ImageButton12 Execution
-
+                imageButton12.setClickable(false);
                 if (playerTurn == 1){
                     imageButton12.setBackgroundResource(player1IconResourcePath);
                 }
@@ -333,7 +331,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_20:
                 //region ImageButton20 Execution
-
+                imageButton20.setClickable(false);
                 if (playerTurn == 1){
                     imageButton20.setBackgroundResource(player1IconResourcePath);
                 }
@@ -355,7 +353,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_21:
                 //region ImageButton21 Execution
-
+                imageButton21.setClickable(false);
                 if (playerTurn == 1){
                     imageButton21.setBackgroundResource(player1IconResourcePath);
                 }
@@ -364,8 +362,11 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("21"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
+
+                   // Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    int[][] temp = gameBoard.getGameBoard();
+                    Toast.makeText(PvpActivity.this, ""+ temp[2][1], Toast.LENGTH_SHORT).show();
+                    //tempWait();
                 }
                 if (gameBoard.detectDraw()){
                     Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
@@ -377,7 +378,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             //endregion
             case R.id.PvpActivity_imageButton_22:
                 //region imageButton22 Execution
-
+                imageButton22.setClickable(false);
                 if (playerTurn == 1){
                     imageButton22.setBackgroundResource(player1IconResourcePath);
                 }
@@ -401,7 +402,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(PvpActivity.this, "Oops, something is wrong", Toast.LENGTH_SHORT).show();
         }
         //endregion
-
+//TODO: make all buttons unclickable once detected win.
 
 
     }
