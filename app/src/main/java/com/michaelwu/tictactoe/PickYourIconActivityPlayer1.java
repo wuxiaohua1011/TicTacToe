@@ -114,7 +114,7 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
         else{
             folder.delete();
             File folder2 = new File("sdcard/camera_app");
-            image_file = new File(folder,"cam_image.jpg");
+            image_file = new File(folder2,"cam_image.jpg");
         }
 
 

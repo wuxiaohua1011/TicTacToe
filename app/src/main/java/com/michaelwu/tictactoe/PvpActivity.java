@@ -16,12 +16,13 @@ import android.widget.Toast;
 public class PvpActivity extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
     private ImageButton imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,imageButton12,imageButton20,imageButton21,imageButton22;
-    private TextView timeConstraintTextView,player1Score, player2Score,playerTurnTextView;
+    private TextView timeConstraintTextView,player1ScoreTextView, player2ScoreTextView,playerTurnTextView;
     private CountDownTimer countDownTimer;
-    private int playerTurn = 1, timeConstraint;
+    private int playerTurn = 1, timeConstraint, player1Score, player2Score;
     private VirtualGameBoard gameBoard;
     private int player1IconResourcePath,player2IconResourcePath;
     private boolean countDownTimerStarted= false;
+
 
 
     @Override
@@ -75,7 +76,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     private void startNewGame() {
         activateAllImageButton();
         gameBoard=new VirtualGameBoard();
-
+        playerTurnTextView.setText("Player " + playerTurn + "'s turn");
     }
 
    //// TODO: 10/18/2016 tell the girls to implement scoring system
@@ -83,7 +84,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     //// TODO: 10/17/2016 fix the issue of  "The application may be doing too much work on its main thread."
     //// TODO: 10/18/2016 fix the camera problem
     //// TODO: 10/18/2016 ask mr shorr why the hell my phone does not run this app
-    //// TODO: 10/19/2016 why is setText not working?????????
+
     private void importPlayer2Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
@@ -123,10 +124,9 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         imageButton22=(ImageButton)findViewById(R.id.PvpActivity_imageButton_22);
         backButton = (Button)findViewById(R.id.PvpActivity_button_back);
         timeConstraintTextView = (TextView)findViewById(R.id.activity_pvp_textView_timeConstraint);
-        player1Score = (TextView)findViewById(R.id.PvpActivity_textView_player1_score);
-        player2Score=(TextView)findViewById(R.id.PvpActivity_textView_player2_score);
+        player1ScoreTextView = (TextView)findViewById(R.id.PvpActivity_textView_player1_score);
+        player2ScoreTextView=(TextView)findViewById(R.id.PvpActivity_textView_player2_score);
         playerTurnTextView=(TextView)findViewById(R.id.activity_pvp_textView_player_turn);
-        playerTurnTextView.setText("asdf");
 
     }
     private void switchPlayer(){
@@ -165,6 +165,20 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 startNewGame();
             }
         }.start();
+    }
+    private void updateScore(){
+        String tempPlayer1Score = getString(R.string.activity_pvp_textView_player1);
+        String tempPlayer2Score=getString(R.string.activity_pvp_textView_player2);
+        player1ScoreTextView.setText(tempPlayer1Score+player1Score);
+        player2ScoreTextView.setText(tempPlayer2Score+player2Score);
+    }
+    private void addScoretoPlayerX(int player){
+        if (player == 1){
+            player1Score++;
+        }
+        else{
+            player2Score++;
+        }
     }
 //   private void activateCountdownTimer(){
 //        countDownTimerStarted=true;
@@ -207,12 +221,13 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                gameBoard.updateGameBoard("00"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    startNewGame();
+                    tempWait();
                 }
                 if (gameBoard.detectDraw()){
                     Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    startNewGame();
+                    tempWait();
                 }
                 switchPlayer();
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
@@ -229,6 +244,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("01"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
                 }
@@ -251,6 +267,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("02"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
 
@@ -274,6 +291,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("10"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
                 }
@@ -296,6 +314,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("11"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
                 }
@@ -318,8 +337,11 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("12"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
+
+
                 }
                 if (gameBoard.detectDraw()){
                     Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
@@ -340,6 +362,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("20"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
                 }
@@ -362,11 +385,9 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("21"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
-
-                   // Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    int[][] temp = gameBoard.getGameBoard();
-                    Toast.makeText(PvpActivity.this, ""+ temp[2][1], Toast.LENGTH_SHORT).show();
-                    //tempWait();
+                    addScoretoPlayerX(playerTurn);
+                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    tempWait();
                 }
                 if (gameBoard.detectDraw()){
                     Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
@@ -387,6 +408,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 gameBoard.updateGameBoard("22"+ playerTurn);
                 if (gameBoard.detectWin(playerTurn)){
+                    addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
                     tempWait();
                 }
@@ -402,6 +424,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(PvpActivity.this, "Oops, something is wrong", Toast.LENGTH_SHORT).show();
         }
         //endregion
+        updateScore();
 //TODO: make all buttons unclickable once detected win.
 
 
