@@ -150,6 +150,17 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
 
     }
+    private void inactiveAllImageButton(){
+        imageButton00.setClickable(false);
+        imageButton01.setClickable(false);
+        imageButton02.setClickable(false);
+        imageButton10.setClickable(false);
+       imageButton20.setClickable(false);
+        imageButton11.setClickable(false);
+        imageButton22.setClickable(false);
+        imageButton12.setClickable(false);
+        imageButton21.setClickable(false);
+    }
     private void importTimeConstraint(){
         SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
         timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
@@ -180,37 +191,36 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             player2Score++;
         }
     }
-//   private void activateCountdownTimer(){
-//        countDownTimerStarted=true;
-//        countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                timeConstraintTextView.setText("Time Left: "+ timeConstraint );
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
-//                countDownTimerStarted=false;
-//            }
-//        }.start();
-//    }
-//    private void cancelCountdownTimer(){
-//        if (countDownTimerStarted){
-//            countDownTimer.cancel();
-//        }
-//    }
+    private void cancelCountDownTimer(){
+        if (countDownTimerStarted){
+            countDownTimer.cancel();
+        }
+    }
+   private void activateCountdownTimer(){
+        countDownTimerStarted=true;
+        countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeConstraintTextView.setText("Time Left: "+ (int)millisUntilFinished/1000 );
+            }
 
+            @Override
+            public void onFinish() {
+                Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
+                countDownTimerStarted=false;
+                switchPlayer();
+            }
+        }.start();
+    }
     @Override
     public void onClick(View v) {
-
         //region Activated when you click a button
         switch (v.getId())
         {
             case R.id.PvpActivity_button_back:
                 startActivity(new Intent(this,MainActivity.class));finish();break;
 
-            case R.id.PvpActivity_imageButton_00:
+            case R.id.PvpActivity_imageButton_00:cancelCountDownTimer();
                 //region ImageButton00 Execution
                 imageButton00.setClickable(false);
                 if (playerTurn == 1){
@@ -223,6 +233,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -233,7 +244,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_01:
+            case R.id.PvpActivity_imageButton_01:cancelCountDownTimer();
                 //region imageButton01 Execution
                 imageButton01.setClickable(false);
                 if (playerTurn == 1){
@@ -246,6 +257,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -256,7 +268,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_02:
+            case R.id.PvpActivity_imageButton_02:cancelCountDownTimer();
                 //region imageButton02 Execution
                 imageButton02.setClickable(false);
                 if (playerTurn == 1){
@@ -269,6 +281,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
 
                 }
@@ -280,7 +293,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_10:
+            case R.id.PvpActivity_imageButton_10:cancelCountDownTimer();
                 //region ImageButton10 Execution
                 imageButton10.setClickable(false);
                 if (playerTurn == 1){
@@ -293,6 +306,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -303,7 +317,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_11:
+            case R.id.PvpActivity_imageButton_11:cancelCountDownTimer();
                 //region ImageButton11 Execution
                 imageButton11.setClickable(false);
                 if (playerTurn == 1){
@@ -316,6 +330,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -326,7 +341,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_12:
+            case R.id.PvpActivity_imageButton_12:cancelCountDownTimer();
                 //region ImageButton12 Execution
                 imageButton12.setClickable(false);
                 if (playerTurn == 1){
@@ -339,6 +354,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
 
 
@@ -351,7 +367,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_20:
+            case R.id.PvpActivity_imageButton_20:cancelCountDownTimer();
                 //region ImageButton20 Execution
                 imageButton20.setClickable(false);
                 if (playerTurn == 1){
@@ -364,6 +380,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -374,7 +391,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_21:
+            case R.id.PvpActivity_imageButton_21:cancelCountDownTimer();
                 //region ImageButton21 Execution
                 imageButton21.setClickable(false);
                 if (playerTurn == 1){
@@ -387,6 +404,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -397,7 +415,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 playerTurnTextView.setText("Player " + playerTurn + "'s turn");
                 break;
             //endregion
-            case R.id.PvpActivity_imageButton_22:
+            case R.id.PvpActivity_imageButton_22:cancelCountDownTimer();
                 //region imageButton22 Execution
                 imageButton22.setClickable(false);
                 if (playerTurn == 1){
@@ -410,6 +428,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 if (gameBoard.detectWin(playerTurn)){
                     addScoretoPlayerX(playerTurn);
                     Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+                    inactiveAllImageButton();
                     tempWait();
                 }
                 if (gameBoard.detectDraw()){
@@ -425,10 +444,9 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         }
         //endregion
         updateScore();
+        activateCountdownTimer();
 //TODO: make all buttons unclickable once detected win.
 
 
     }
-
-
 }
