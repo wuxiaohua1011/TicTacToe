@@ -3,6 +3,7 @@ package com.michaelwu.tictactoe;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ private Button backButton, player1Button,player2Button;
     public static final String TIME_CONSTRAINT = "timeConstraint";
     private ImageView p1Image,p2Image;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +26,24 @@ private Button backButton, player1Button,player2Button;
         addListener();
         changeP1Image();
         changeP2Image();
+        setNumberPicker();
+    }
+
+    private void setNumberPicker() {
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(60);
+       numberPicker.setValue(5);
+
     }
 
     private void changeP2Image() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
-        if (!path.equals("nothing")){
+        if (sharedPreference.getBoolean(PickYourIconActivityPlayer2.PLAYER2_CAMERA_USED,false)){
+            path = sharedPreference.getString("playe21pic","nothing");
+            p2Image.setBackground(Drawable.createFromPath(path));
+        }
+        else if (!path.equals("nothing")){
             int intPath = Integer.parseInt(path);
             p2Image.setBackgroundResource(intPath);
         }
@@ -37,8 +51,12 @@ private Button backButton, player1Button,player2Button;
 
     private void changeP1Image() {
         SharedPreferences sharedPreference = getSharedPreferences("player1pic",MODE_PRIVATE);
-        String path = sharedPreference.getString("player1pic","nothing");
-        if (!path.equals("nothing")){
+        String path = sharedPreference.getString("player1pic","nothing");;
+        if (sharedPreference.getBoolean(PickYourIconActivityPlayer1.PLAYER1_CAMERA_USED,false)){
+            path = sharedPreference.getString("player1pic","nothing");
+            p1Image.setBackground(Drawable.createFromPath(path));
+        }
+       else if (!path.equals("nothing")){
             int intPath = Integer.parseInt(path);
             p1Image.setBackgroundResource(intPath);
         }
@@ -49,7 +67,7 @@ private Button backButton, player1Button,player2Button;
         player1Button=(Button)findViewById(R.id.activity_setting_button_change_player_1_icon);
         player2Button=(Button)findViewById(R.id.activity_setting_button_change_player_2_icon);
         numberPicker=(NumberPicker)findViewById(R.id.activity_setting_numberPicker_time);
-        numberPicker.setMaxValue(60);numberPicker.setMinValue(1);
+        numberPicker.setValue(5);
         p1Image = (ImageView)findViewById(R.id.activity_setting_imageView_player_1);
         p2Image = (ImageView)findViewById(R.id.activity_setting_imageView_player_2);
     }
