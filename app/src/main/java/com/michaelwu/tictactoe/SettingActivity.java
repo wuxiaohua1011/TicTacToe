@@ -25,7 +25,7 @@ private Button backButton, player1Button,player2Button;
         wireWidget();
         addListener();
         changeP1Image();
-        changeP2Image();
+       changeP2Image();
         setNumberPicker();
     }
 
@@ -39,26 +39,31 @@ private Button backButton, player1Button,player2Button;
     private void changeP2Image() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
-        if (sharedPreference.getBoolean(PickYourIconActivityPlayer2.PLAYER2_CAMERA_USED,false)){
-            path = sharedPreference.getString("playe21pic","nothing");
+        if (path.contains("cam_image2")){
             p2Image.setBackground(Drawable.createFromPath(path));
         }
         else if (!path.equals("nothing")){
             int intPath = Integer.parseInt(path);
             p2Image.setBackgroundResource(intPath);
         }
+        else{
+            p2Image.setBackgroundResource(R.mipmap.o);
+        }
     }
 
     private void changeP1Image() {
         SharedPreferences sharedPreference = getSharedPreferences("player1pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player1pic","nothing");;
-        if (sharedPreference.getBoolean(PickYourIconActivityPlayer1.PLAYER1_CAMERA_USED,false)){
+        if (path.contains("cam_image")){
             path = sharedPreference.getString("player1pic","nothing");
             p1Image.setBackground(Drawable.createFromPath(path));
         }
        else if (!path.equals("nothing")){
             int intPath = Integer.parseInt(path);
             p1Image.setBackgroundResource(intPath);
+        }
+        else{
+            p1Image.setBackgroundResource(R.mipmap.x);
         }
     }
 

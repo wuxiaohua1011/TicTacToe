@@ -52,30 +52,33 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     private void importPlayer2Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
-        isPlayer2CameraUsed= sharedPreference.getBoolean(PickYourIconActivityPlayer2.PLAYER2_CAMERA_USED,false);
-        if (isPlayer2CameraUsed){
-            player2IconResourcePathCameraUsed = path;
+        if (path.contains("cam_image2")){
+            isPlayer2CameraUsed=true;
+            player2IconResourcePathCameraUsed =path;
         }
-        else if (path.equals("nothing")){
-            player2IconResourcePathInt= R.drawable.o;
+        else if (!path.equals("nothing")){
+            int intPath = Integer.parseInt(path);
+            player2IconResourcePathInt = intPath;
         }
         else{
-            player2IconResourcePathInt=Integer.parseInt(path);
+            player2IconResourcePathInt = R.mipmap.o;
         }
 
     }
     private void importPlayer1Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player1pic",MODE_PRIVATE);
-        String path = sharedPreference.getString("player1pic","nothing");
-        isPlayer1CameraUsed= sharedPreference.getBoolean(PickYourIconActivityPlayer1.PLAYER1_CAMERA_USED,false);
-        if (isPlayer1CameraUsed){
+        String path = sharedPreference.getString("player1pic","nothing");;
+        if (path.contains("cam_image")){
+            path = sharedPreference.getString("player1pic","nothing");
+            isPlayer1CameraUsed=true;
             player1IconResourcePathCameraUsed = path;
         }
-        else if (path.equals("nothing")){
-            player1IconResourcePathInt= R.drawable.x;
+        else if (!path.equals("nothing")){
+            int intPath = Integer.parseInt(path);
+            player1IconResourcePathInt = intPath;
         }
         else{
-            player1IconResourcePathInt=Integer.parseInt(path);
+            player1IconResourcePathInt = R.mipmap.x;
         }
 
     }
