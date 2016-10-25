@@ -65,14 +65,15 @@
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
 
-                android:id="@+id/PvpActivity_imageButton_01" />
+                android:id="@+id/PvpActivity_imageButton_10" />
 
             <ImageButton
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
 
-                android:id="@+id/PvpActivity_imageButton_02" />
+                android:id="@+id/PvpActivity_imageButton_20" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +86,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
 
-                android:id="@+id/PvpActivity_imageButton_10" />
+                android:id="@+id/PvpActivity_imageButton_01" />
 
             <ImageButton
                 android:layout_width="100dp"
@@ -112,7 +113,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
 
-                android:id="@+id/PvpActivity_imageButton_20" />
+                android:id="@+id/PvpActivity_imageButton_02" />
 
             <ImageButton
                 android:layout_width="100dp"

@@ -19,11 +19,14 @@ public class PickYourIconActivityPlayer2 extends AppCompatActivity implements Vi
     private ImageButton cameraButton;
     private ImageButton lizardButton, corgiButton, kittenButton, teslaButton, bunnyButton, clownButton, xButton, oButton;
     static final int CAM_REQUEST = 1;
+    static final String PLAYER2_CAMERA_USED="Player2CameraUsed";
+    private boolean camera_used = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_your_icon_activity_player2);
+        camera_used=false;
         wireWidget();
         setListener();
     }
@@ -107,14 +110,14 @@ public class PickYourIconActivityPlayer2 extends AppCompatActivity implements Vi
     }
 
     private File getFile() {
-        File folder = new File("sdcard/camera_app2");
+        File folder = new File("camera_app2");
         File image_file;
         if (!folder.exists()) {
             folder.mkdir();
             image_file = new File(folder, "cam_image2.jpg");
         } else {
             folder.delete();
-            File folder2 = new File("sdcard/camera_app2");
+            File folder2 = new File("camera_app2");
             image_file = new File(folder, "cam_image2.jpg");
         }
 
@@ -124,10 +127,12 @@ public class PickYourIconActivityPlayer2 extends AppCompatActivity implements Vi
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String path = "sdcard/camera_app2/cam_image2.jpg";
+        camera_used = true;
+        String path = "camera_app2/cam_image2.jpg";
         cameraButton.setBackground(Drawable.createFromPath(path));
         SharedPreferences sharedPreferences = getSharedPreferences("player2pic",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PLAYER2_CAMERA_USED,camera_used);
         editor.putString("player2pic",path);
         editor.commit();
     }

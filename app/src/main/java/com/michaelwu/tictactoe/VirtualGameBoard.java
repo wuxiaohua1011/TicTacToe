@@ -1,8 +1,5 @@
 package com.michaelwu.tictactoe;
 
-import android.widget.ImageButton;
-import android.widget.ImageView;
-
 /**
  * This class is used to
  * 1) record the entire board
@@ -34,36 +31,42 @@ public class VirtualGameBoard {
         int player = Integer.parseInt(code.substring(2));
         gameBoard[row][col]=player;
     }
-
+public int[][] getGameBoard()
+{
+    return gameBoard;
+}
     public boolean detectWin(int player){
         //vertical wins
+
         if (gameBoard[0][0] == player && gameBoard[1][0] == player && gameBoard[2][0] == player){
             return true;
         }
-        if (gameBoard[0][1] == player && gameBoard[1][1]== player && gameBoard[2][1] == player){
+        else if (gameBoard[0][1] == player && gameBoard[1][1]== player && gameBoard[2][1] == player){
             return true;
         }
-        if (gameBoard[0][2] == player && gameBoard[1][2]== player && gameBoard[2][2]== player){
+        else if (gameBoard[0][2] == player && gameBoard[1][2]== player && gameBoard[2][2]== player){
             return true;
         }
         //horizontal wins
-        if (gameBoard[0][0] == player && gameBoard[0][1]== player&& gameBoard[0][2] == player){
+        else if (gameBoard[0][0] == player && gameBoard[0][1]== player&& gameBoard[0][2] == player){
             return true;
         }
-        if (gameBoard[1][0] == player && gameBoard[1][1]== player && gameBoard[1][2]== player){
+        else if (gameBoard[1][0] == player && gameBoard[1][1]== player && gameBoard[1][2]== player){
             return true;
         }
-        if (gameBoard[2][0]== player && gameBoard[2][1]== player && gameBoard[2][2]== player){
+        else if (gameBoard[2][0]== player && gameBoard[2][1]== player && gameBoard[2][2]== player){
             return true;
         }
         //diagnoal wins
-        if (gameBoard[0][0]== player && gameBoard[1][1]== player && gameBoard[2][2]== player){
+        else if (gameBoard[0][0]== player && gameBoard[1][1]== player && gameBoard[2][2]== player){
             return true;
         }
-        if (gameBoard[0][2] == player && gameBoard[1][1]== player && gameBoard[2][0]== player){
+        else if (gameBoard[0][2] == player && gameBoard[1][1]== player && gameBoard[2][0]== player){
             return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
     public boolean detectDraw(){
         if ( (gameBoard[0][0]==1 || gameBoard[0][0]==2) && (gameBoard[0][1] == 1 || gameBoard[0][1] == 2) && (gameBoard[0][2]==1 || gameBoard[0][2] == 2) &&

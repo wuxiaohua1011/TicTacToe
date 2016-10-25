@@ -1,7 +1,4 @@
 package com.michaelwu.tictactoe;
-/*
-*player 1 always goes first
- */
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -11,19 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class PvpActivity extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
     private ImageButton imageButton00,imageButton01,imageButton02,imageButton10,imageButton11,imageButton12,imageButton20,imageButton21,imageButton22;
-    private TextView timeConstraintTextView,player1Score, player2Score,playerTurnTextView;
+    private TextView timeConstraintTextView,player1ScoreTextView, player2ScoreTextView,playerTurnTextView;
     private CountDownTimer countDownTimer;
-    private int playerTurn = 1, timeConstraint;
+    private int playerTurn = 1, timeConstraint, player1Score, player2Score;
     private VirtualGameBoard gameBoard;
-    private int player1IconResourcePath,player2IconResourcePath;
+    private int player1IconResourcePathInt,player2IconResourcePathInt;
+    private String player1IconResourcePathCameraUsed,player2IconResourcePathCameraUsed;
     private boolean countDownTimerStarted= false;
+    private boolean isPlayer1CameraUsed,isPlayer2CameraUsed;
+
 
 
     @Override
@@ -37,69 +36,48 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         importPlayer1Icon();
         importPlayer2Icon();
         startNewGame();
-//        temp22= (ImageButton)findViewById(R.id.PvpActivity_imageButton_22);
-//        timeConstraintTextView = (TextView)findViewById(R.id.activity_pvp_textView_timeConstraint);
-//
-//
-//        temp22.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                SharedPreferences player1SharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
-//                String player1ImagePath = player1SharedPreferences.getString("player1pic","nothing");
-//                Toast.makeText(PvpActivity.this, "" + player1ImagePath, Toast.LENGTH_SHORT).show();
-//                imageView1.setBackground(Drawable.createFromPath(player1ImagePath));
-//            }
-//        });
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
-//        final int timeConstraint = sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,61);
-//        if (timeConstraint == 61){
-//            Toast.makeText(PvpActivity.this, "something went wrong", Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Toast.makeText(PvpActivity.this, ""+timeConstraint, Toast.LENGTH_SHORT).show();
-//            countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
-//                @Override
-//                public void onTick(long l) {
-//                    timeConstraintTextView.setText("Time Left: " + (int)l/1000);
-//                }
-//
-//                @Override
-//                public void onFinish() {
-//                    Toast.makeText(PvpActivity.this, "Counted "+ timeConstraint, Toast.LENGTH_SHORT).show();
-//                }
-//            }.start();
-//        }
-
-//tp
     }
 
     private void startNewGame() {
         activateAllImageButton();
         gameBoard=new VirtualGameBoard();
-
+        playerTurnTextView.setText("Player " + playerTurn + "'s turn");
     }
 
-   //// TODO: 10/18/2016 tell the girls to implement scoring system
     //// TODO: 10/17/2016 make everything clearer, add comments, implement more methods rather than writing each procedure over and over again 
     //// TODO: 10/17/2016 fix the issue of  "The application may be doing too much work on its main thread."
     //// TODO: 10/18/2016 fix the camera problem
     //// TODO: 10/18/2016 ask mr shorr why the hell my phone does not run this app
-    //// TODO: 10/19/2016 why is setText not working?????????
+
     private void importPlayer2Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player2pic","nothing");
-        if (!path.equals("nothing")){
-            player2IconResourcePath = Integer.parseInt(path);
-
+        isPlayer2CameraUsed= sharedPreference.getBoolean(PickYourIconActivityPlayer2.PLAYER2_CAMERA_USED,false);
+        if (isPlayer2CameraUsed){
+            player2IconResourcePathCameraUsed = path;
         }
+        else if (path.equals("nothing")){
+            player2IconResourcePathInt= R.drawable.o;
+        }
+        else{
+            player2IconResourcePathInt=Integer.parseInt(path);
+        }
+
     }
     private void importPlayer1Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player1pic",MODE_PRIVATE);
         String path = sharedPreference.getString("player1pic","nothing");
-        if (!path.equals("nothing")){
-            player1IconResourcePath = Integer.parseInt(path);
+        isPlayer1CameraUsed= sharedPreference.getBoolean(PickYourIconActivityPlayer1.PLAYER1_CAMERA_USED,false);
+        if (isPlayer1CameraUsed){
+            player1IconResourcePathCameraUsed = path;
         }
+        else if (path.equals("nothing")){
+            player1IconResourcePathInt= R.drawable.x;
+        }
+        else{
+            player1IconResourcePathInt=Integer.parseInt(path);
+        }
+
     }
     private void addListener() {
         backButton.setOnClickListener(this);
@@ -125,10 +103,9 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         imageButton22=(ImageButton)findViewById(R.id.PvpActivity_imageButton_22);
         backButton = (Button)findViewById(R.id.PvpActivity_button_back);
         timeConstraintTextView = (TextView)findViewById(R.id.activity_pvp_textView_timeConstraint);
-        player1Score = (TextView)findViewById(R.id.PvpActivity_textView_player1_score);
-        player2Score=(TextView)findViewById(R.id.PvpActivity_textView_player2_score);
+        player1ScoreTextView = (TextView)findViewById(R.id.PvpActivity_textView_player1_score);
+        player2ScoreTextView=(TextView)findViewById(R.id.PvpActivity_textView_player2_score);
         playerTurnTextView=(TextView)findViewById(R.id.activity_pvp_textView_player_turn);
-        playerTurnTextView.setText("asdf");
 
     }
     private void switchPlayer(){
@@ -152,6 +129,17 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
 
 
     }
+    private void inactiveAllImageButton(){
+        imageButton00.setClickable(false);
+        imageButton01.setClickable(false);
+        imageButton02.setClickable(false);
+        imageButton10.setClickable(false);
+       imageButton20.setClickable(false);
+        imageButton11.setClickable(false);
+        imageButton22.setClickable(false);
+        imageButton12.setClickable(false);
+        imageButton21.setClickable(false);
+    }
     private void importTimeConstraint(){
         SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
         timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
@@ -168,30 +156,79 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             }
         }.start();
     }
-//   private void activateCountdownTimer(){
-//        countDownTimerStarted=true;
-//        countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                timeConstraintTextView.setText("Time Left: "+ timeConstraint );
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
-//                countDownTimerStarted=false;
-//            }
-//        }.start();
-//    }
-//    private void cancelCountdownTimer(){
-//        if (countDownTimerStarted){
-//            countDownTimer.cancel();
-//        }
-//    }
+    private void updateScore(){
+        String tempPlayer1Score = getString(R.string.activity_pvp_textView_player1);
+        String tempPlayer2Score=getString(R.string.activity_pvp_textView_player2);
+        player1ScoreTextView.setText(tempPlayer1Score+player1Score);
+        player2ScoreTextView.setText(tempPlayer2Score+player2Score);
+    }
+    private void addScoretoPlayerX(int player){
+        if (player == 1){
+            player1Score++;
+        }
+        else{
+            player2Score++;
+        }
+    }
+    private void cancelCountDownTimer(){
+        if (countDownTimerStarted){
+            countDownTimer.cancel();
+        }
+    }
+   private void activateCountdownTimer(){
+        countDownTimerStarted=true;
+        countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeConstraintTextView.setText("Time Left: "+ (int)millisUntilFinished/1000 );
+            }
 
+            @Override
+            public void onFinish() {
+                Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
+                countDownTimerStarted=false;
+                switchPlayer();
+            }
+        }.start();
+    }
+
+    private void imageButtonClicked(ImageButton tempImageButton, String positionInGameBoard){
+        tempImageButton.setClickable(false);
+       if (playerTurn==1){
+           if (isPlayer1CameraUsed){
+               tempImageButton.setBackground(Drawable.createFromPath(player1IconResourcePathCameraUsed));
+           }
+           else{
+               tempImageButton.setBackgroundResource(player1IconResourcePathInt);
+           }
+       }
+        else{
+           if (isPlayer2CameraUsed){
+               tempImageButton.setBackground(Drawable.createFromPath(player2IconResourcePathCameraUsed));
+           }
+           else{
+               tempImageButton.setBackgroundResource(player2IconResourcePathInt);
+           }
+
+       }
+
+        gameBoard.updateGameBoard(positionInGameBoard+ playerTurn);
+        if (gameBoard.detectWin(playerTurn)){
+            addScoretoPlayerX(playerTurn);
+            Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+            inactiveAllImageButton();
+            tempWait();
+        }
+        if (gameBoard.detectDraw()){
+            Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+            tempWait();
+        }
+        switchPlayer();
+        playerTurnTextView.setText("Player " + playerTurn + "'s turn");
+
+    }
     @Override
     public void onClick(View v) {
-
         //region Activated when you click a button
         switch (v.getId())
         {
@@ -199,212 +236,31 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(new Intent(this,MainActivity.class));finish();break;
 
             case R.id.PvpActivity_imageButton_00:
-                //region ImageButton00 Execution
-
-                if (playerTurn == 1){
-                    imageButton00.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton00.setBackgroundResource(player2IconResourcePath);
-                }
-               gameBoard.updateGameBoard("00"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    startNewGame();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    startNewGame();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_01:
-                //region imageButton01 Execution
-
-                if (playerTurn == 1){
-                    imageButton01.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton01.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("01"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_02:
-                //region imageButton02 Execution
-
-                if (playerTurn == 1){
-                    imageButton02.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton02.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("02"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_10:
-                //region ImageButton10 Execution
-
-                if (playerTurn == 1){
-                    imageButton10.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton10.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("10"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_11:
-                //region ImageButton11 Execution
-
-                if (playerTurn == 1){
-                    imageButton11.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton11.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("11"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_12:
-                //region ImageButton12 Execution
-
-                if (playerTurn == 1){
-                    imageButton12.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton12.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("12"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_20:
-                //region ImageButton20 Execution
-
-                if (playerTurn == 1){
-                    imageButton20.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton20.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("20"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_21:
-                //region ImageButton21 Execution
-
-                if (playerTurn == 1){
-                    imageButton21.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton21.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("21"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
-            case R.id.PvpActivity_imageButton_22:
-                //region imageButton22 Execution
-
-                if (playerTurn == 1){
-                    imageButton22.setBackgroundResource(player1IconResourcePath);
-                }
-                else{
-                    imageButton22.setBackgroundResource(player2IconResourcePath);
-                }
-                gameBoard.updateGameBoard("22"+ playerTurn);
-                if (gameBoard.detectWin(playerTurn)){
-                    Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                if (gameBoard.detectDraw()){
-                    Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
-                    tempWait();
-                }
-                switchPlayer();
-                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
-                break;
-            //endregion
+                cancelCountDownTimer();imageButtonClicked(imageButton00,"00");break;
+            case R.id.PvpActivity_imageButton_01:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton01,"01");break;
+            case R.id.PvpActivity_imageButton_02:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton02,"02");break;
+            case R.id.PvpActivity_imageButton_10:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton10,"10");break;
+            case R.id.PvpActivity_imageButton_11:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton11,"11");break;
+            case R.id.PvpActivity_imageButton_12:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton12,"12");break;
+            case R.id.PvpActivity_imageButton_20:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton20,"20");break;
+            case R.id.PvpActivity_imageButton_21:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton21,"21");break;
+            case R.id.PvpActivity_imageButton_22:cancelCountDownTimer();
+                cancelCountDownTimer();imageButtonClicked(imageButton22,"22");break;
             default:
                 Toast.makeText(PvpActivity.this, "Oops, something is wrong", Toast.LENGTH_SHORT).show();
         }
         //endregion
+        updateScore();
+        activateCountdownTimer();
 
 
 
     }
-
-
 }

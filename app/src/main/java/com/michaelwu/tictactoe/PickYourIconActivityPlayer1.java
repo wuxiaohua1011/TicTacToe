@@ -1,7 +1,10 @@
 package com.michaelwu.tictactoe;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,16 +16,21 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class PickYourIconActivityPlayer1 extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
     private ImageButton cameraButton;
     private ImageButton lizardButton, corgiButton, kittenButton, teslaButton, bunnyButton, clownButton, xButton, oButton;
     static final int CAM_REQUEST = 1;
+    static final String PLAYER1_CAMERA_USED="PLAYER_1_CAMERA_USED";
+    private boolean camera_used = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_your_icon_player_1);
+        camera_used=false;
         wireWidget();
         setListener();
     }
@@ -54,6 +62,29 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
     }
 
 
+//    private String saveToInternalStorage(Bitmap bitmapImage){
+//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+//        // path to /data/data/yourapp/app_data/imageDir
+//        File directory = cw.getDir("player1CapturedImageDirectory", Context.MODE_PRIVATE);
+//        // Create imageDir
+//        File mypath=new File(directory,"player1CapturedImage.jpg");
+//
+//        FileOutputStream fos = null;
+//        try {
+//            fos = new FileOutputStream(mypath);
+//            // Use the compress method on the BitMap object to write image to the OutputStream
+//            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                fos.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return mypath;
+//    }
     @Override
     public void onClick(View view) {
         SharedPreferences player1SharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
@@ -103,17 +134,16 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
         }
 
     }
-    private File getFile(){
-        File folder = new File("sdcard/camera_app");
+    private File getFile() {
+        File folder = new File("camera_app");
         File image_file;
-        if (!folder.exists()){
+        if (!folder.exists()) {
             folder.mkdir();
-            image_file = new File(folder,"cam_image.jpg");
-        }
-        else{
+            image_file = new File(folder, "cam_image.jpg");
+        } else {
             folder.delete();
-            File folder2 = new File("sdcard/camera_app");
-            image_file = new File(folder,"cam_image.jpg");
+            File folder2 = new File("camera_app");
+            image_file = new File(folder, "cam_image.jpg");
         }
 
 
@@ -121,10 +151,12 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String path = "sdcard/camera_app/cam_image.jpg";
+        camera_used=true;
+        String path = "camera_app/cam_image.jpg";
         cameraButton.setBackground(Drawable.createFromPath(path));
         SharedPreferences sharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PLAYER1_CAMERA_USED,camera_used);
         editor.putString("player1pic",path);
         editor.commit();
     }
