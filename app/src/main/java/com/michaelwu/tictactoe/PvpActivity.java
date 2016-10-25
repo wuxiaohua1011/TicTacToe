@@ -20,6 +20,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     private VirtualGameBoard gameBoard;
     private int player1IconResourcePathInt,player2IconResourcePathInt;
     private String player1IconResourcePathCameraUsed,player2IconResourcePathCameraUsed;
+    private boolean runningPvpTimer = true;
     private boolean countDownTimerStarted= false;
     private boolean isPlayer1CameraUsed,isPlayer2CameraUsed;
 
@@ -38,16 +39,22 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         startNewGame();
     }
 
+    /**
+     * Resets board
+     */
     private void startNewGame() {
+        //opt: Toast.makeText(this, "New Game starts in 3.5 seconds.", Toast.LENGTH_LONG).show();//
+        //if this happens and thread pauses during the display time, the board will not reset until disappears.
+        //But you want it to clear first, then toast, then start timer
         activateAllImageButton();
+        activateCountdownTimer();//you want to start timer immediately. opt. this'll change
+        //TODO: activate countdown timer when new round. not game.
+        //TODO: make the timer hold for a second on 1 and 5.
+        //TODO: stop timer when you leave pvp
+        // current one
         gameBoard=new VirtualGameBoard();
         playerTurnTextView.setText("Player " + playerTurn + "'s turn");
     }
-
-    //// TODO: 10/17/2016 make everything clearer, add comments, implement more methods rather than writing each procedure over and over again 
-    //// TODO: 10/17/2016 fix the issue of  "The application may be doing too much work on its main thread."
-    //// TODO: 10/18/2016 fix the camera problem
-    //// TODO: 10/18/2016 ask mr shorr why the hell my phone does not run this app
 
     private void importPlayer2Icon() {
         SharedPreferences sharedPreference = getSharedPreferences("player2pic",MODE_PRIVATE);
@@ -58,6 +65,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         }
         else if (path.equals("nothing")){
             player2IconResourcePathInt= R.drawable.o;
+
         }
         else{
             player2IconResourcePathInt=Integer.parseInt(path);
@@ -108,6 +116,10 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         playerTurnTextView=(TextView)findViewById(R.id.activity_pvp_textView_player_turn);
 
     }
+
+    /**
+     * Lets the game know that the active player has changed.
+     */
     private void switchPlayer(){
         if (playerTurn==1){
             playerTurn=2;
@@ -145,6 +157,10 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
         timeConstraintTextView.setText(""+timeConstraint);
     }
+
+    /**
+     * Makes a pause
+     */
     private void tempWait() {
         new CountDownTimer(4000, 1000) {
             @Override
@@ -156,12 +172,21 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             }
         }.start();
     }
+
+    /**
+     * TODO: stop the "countdown finished" toast from appearing infinitely.
+     */
     private void updateScore(){
         String tempPlayer1Score = getString(R.string.activity_pvp_textView_player1);
         String tempPlayer2Score=getString(R.string.activity_pvp_textView_player2);
         player1ScoreTextView.setText(tempPlayer1Score+player1Score);
         player2ScoreTextView.setText(tempPlayer2Score+player2Score);
     }
+
+    /**
+     * Increments the active player's score (winning player)
+     * @param player either 1 or something else (2?) indicative of the current active player
+     */
     private void addScoretoPlayerX(int player){
         if (player == 1){
             player1Score++;
@@ -170,24 +195,32 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             player2Score++;
         }
     }
+
     private void cancelCountDownTimer(){
         if (countDownTimerStarted){
             countDownTimer.cancel();
         }
     }
+
    private void activateCountdownTimer(){
         countDownTimerStarted=true;
         countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeConstraintTextView.setText("Time Left: "+ (int)millisUntilFinished/1000 );
-            }
+                timeConstraintTextView.setText("Time Left: "+ (int)(1+millisUntilFinished)/1000);
+                    if(runningPvpTimer == false)
+                    {
+                        countDownTimer.cancel();
+                    }
+                } //makes the 0 appear, but small delay not exactly on click
 
             @Override
             public void onFinish() {
+                timeConstraintTextView.setText("Time Left: " + 0);//TODO: works, but a little delay between 1 and 0
                 Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
                 countDownTimerStarted=false;
                 switchPlayer();
+                activateCountdownTimer();//omg will this make the timer start over once the next player's turn??
             }
         }.start();
     }
@@ -233,8 +266,8 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId())
         {
             case R.id.PvpActivity_button_back:
-                startActivity(new Intent(this,MainActivity.class));finish();break;
-
+                startActivity(new Intent(this,MainActivity.class));finish();runningPvpTimer = false;break;
+                //ADDITION
             case R.id.PvpActivity_imageButton_00:
                 cancelCountDownTimer();imageButtonClicked(imageButton00,"00");break;
             case R.id.PvpActivity_imageButton_01:cancelCountDownTimer();
