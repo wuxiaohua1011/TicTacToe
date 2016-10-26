@@ -191,6 +191,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
                 countDownTimerStarted=false;
                 switchPlayer();
+                playerTurnTextView.setText("Player " + playerTurn + "'s turn");
             }
         }.start();
     }
@@ -236,7 +237,8 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId())
         {
             case R.id.PvpActivity_button_back:
-                startActivity(new Intent(this,MainActivity.class));finish();break;
+                startActivity(new Intent(this,MainActivity.class));finish();cancelCountDownTimer();
+                break;
 
             case R.id.PvpActivity_imageButton_00:
                 cancelCountDownTimer();imageButtonClicked(imageButton00,"00");break;
