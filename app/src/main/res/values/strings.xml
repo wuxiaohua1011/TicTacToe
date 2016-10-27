@@ -8,4 +8,19 @@
     <string name="activity_setting_change_player_2_icon">CHANGE PLAYER 2 ICON</string>
     <string name="activity_setting_button_back">Back</string>
     <string name="activity_main_button_settings">Settings</string>
+    <string name="activity_main_button_rate_this_app">Rate this app</string>
+    <string name="activity_main_Toast_die_die_Die">die die Die</string>
+    <string name="activity_main_Toast_you_know_this_deserves_at_least_a_3_star">you know this deserves at least a 3-star</string>
+    <string name="activity_main_Toast_this_deserves_at_least_a_4_star">this deserves at least a 4-star</string>
+    <string name="activity_main_Toast_this_deserves_at_least_a_5_star">this deserves at least a 5-star</string>
+    <string name="activity_main_Toast_ty_ty">ty ty</string>
+    <string name="activity_pickYourIconActivityPlayer1_Toast_something_wrong_happened">Something wrong happened</string>
+    <string name="activity_pickYourIconActivityPlayer2_Toast_something_wrong_happened">Something wrong happened</string>
+    <string name="activity_pvp_Toast_oops_something_is_wrong">Oops, something is wrong</string>
+    <string name="activity_pvp_TextView_playerTurn">Player\'s turn</string>
+    <string name="activity_pvp_Toast_countDownFinished">count down finished</string>
+    <string name="activity_pvp_TextView_timeConstraint">Time left: </string>
+    <string name="activity_pvp_Toast_playerWon">The winner is: Player </string>
+    <string name="activity_pvp_Toast_draw">Draw</string>
+
 </resources>

@@ -28,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
                                          boolean fromUser){
                 double d = rating;
                 if (d <= 1)
-                    Toast.makeText(MainActivity.this, "die die DIE", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.activity_main_Toast_die_die_Die), Toast.LENGTH_SHORT).show();
                 else if (d <= 2)
-                    Toast.makeText(MainActivity.this, "you know this deserves at least a 3-star", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.activity_main_Toast_you_know_this_deserves_at_least_a_3_star), Toast.LENGTH_SHORT).show();
                 else if (d <= 3)
-                    Toast.makeText(MainActivity.this, "this deserves at least a 4-star", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.activity_main_Toast_this_deserves_at_least_a_4_star), Toast.LENGTH_SHORT).show();
                 else if (d <= 4)
-                    Toast.makeText(MainActivity.this, "you know this deserves a 5-star", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.activity_main_Toast_this_deserves_at_least_a_5_star), Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(MainActivity.this, ":)tyty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.activity_main_Toast_ty_ty), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -51,18 +51,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void activity_main_button_play_game_clicked(View view) {
         startActivity(new Intent(this, PvpActivity.class));
-        finish();
+
     }
 
     //TODO: toggle the rating bar when rate this app is clicked.
     public void activity_main_button_rate_this_app_clicked(View view) {
 
         //toggling text w/ the rating bar
-        if (rateThisAppButton.getText().equals("Rate this app")) {
+        if (rateThisAppButton.getText().equals(getString(R.string.activity_main_button_rate_this_app))) {
             rateThisAppButton.setText("hide");
             ratingBarRatingBar.setVisibility(View.GONE);
         } else {
-            rateThisAppButton.setText("Rate the app");
+            rateThisAppButton.setText(getString(R.string.activity_main_button_rate_this_app));
             ratingBarRatingBar.setVisibility(View.VISIBLE);
         }
     }
@@ -70,6 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void activity_main_button_setting_clicked(View view) {
         startActivity(new Intent(this,SettingActivity.class));
-        finish();
+
     }
 }

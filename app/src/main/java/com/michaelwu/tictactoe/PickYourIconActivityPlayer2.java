@@ -105,7 +105,7 @@ public class PickYourIconActivityPlayer2 extends AppCompatActivity implements Vi
                 editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             default:
-                Toast.makeText(PickYourIconActivityPlayer2.this, "Something Wrong happened", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconActivityPlayer2_Toast_something_wrong_happened) , Toast.LENGTH_SHORT).show();
                 break;
 
         }
