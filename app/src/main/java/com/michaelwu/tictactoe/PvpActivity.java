@@ -41,7 +41,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     private void startNewGame() {
         activateAllImageButton();
         gameBoard=new VirtualGameBoard();
-        playerTurnTextView.setText("Player " + playerTurn + "'s turn");
+        playerTurnTextView.setText(getString(R.string.activity_pvp_TextView_playerTurn) + playerTurn);
     }
 
     //// TODO: 10/17/2016 make everything clearer, add comments, implement more methods rather than writing each procedure over and over again 
@@ -158,7 +158,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     }
     private void updateScore(){
         String tempPlayer1Score = getString(R.string.activity_pvp_textView_player1);
-        String tempPlayer2Score=getString(R.string.activity_pvp_textView_player2);
+        String tempPlayer2Score= getString(R.string.activity_pvp_textView_player2);
         player1ScoreTextView.setText(tempPlayer1Score+player1Score);
         player2ScoreTextView.setText(tempPlayer2Score+player2Score);
     }
@@ -180,12 +180,12 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         countDownTimer = new CountDownTimer(timeConstraint*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeConstraintTextView.setText("Time Left: "+ (int)millisUntilFinished/1000 );
+                timeConstraintTextView.setText(getString(R.string.activity_pvp_TextView_timeConstraint) + (int)millisUntilFinished/1000);
             }
 
             @Override
             public void onFinish() {
-                Toast.makeText(PvpActivity.this, "countDownFinished", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PvpActivity.this, getString(R.string.activity_pvp_Toast_countDownFinished), Toast.LENGTH_SHORT).show();
                 countDownTimerStarted=false;
                 switchPlayer();
             }
@@ -215,16 +215,16 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         gameBoard.updateGameBoard(positionInGameBoard+ playerTurn);
         if (gameBoard.detectWin(playerTurn)){
             addScoretoPlayerX(playerTurn);
-            Toast.makeText(PvpActivity.this, "Player " + playerTurn + " won", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PvpActivity.this, getString(R.string.activity_pvp_Toast_playerWon) + playerTurn, Toast.LENGTH_SHORT).show();
             inactiveAllImageButton();
             tempWait();
         }
         if (gameBoard.detectDraw()){
-            Toast.makeText(PvpActivity.this, "Draw", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PvpActivity.this, getString(R.string.activity_pvp_Toast_draw), Toast.LENGTH_SHORT).show();
             tempWait();
         }
         switchPlayer();
-        playerTurnTextView.setText("Player " + playerTurn + "'s turn");
+        playerTurnTextView.setText(getString(R.string.activity_pvp_TextView_playerTurn) + playerTurn);
 
     }
     @Override
@@ -254,7 +254,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.PvpActivity_imageButton_22:cancelCountDownTimer();
                 cancelCountDownTimer();imageButtonClicked(imageButton22,"22");break;
             default:
-                Toast.makeText(PvpActivity.this, "Oops, something is wrong", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PvpActivity.this, getString(R.string.activity_pvp_Toast_oops_something_is_wrong), Toast.LENGTH_SHORT).show();
         }
         //endregion
         updateScore();

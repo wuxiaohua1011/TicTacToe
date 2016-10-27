@@ -1,10 +1,7 @@
 package com.michaelwu.tictactoe;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,8 +13,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class PickYourIconActivityPlayer1 extends AppCompatActivity implements View.OnClickListener{
     private Button backButton;
@@ -62,29 +57,7 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
     }
 
 
-//    private String saveToInternalStorage(Bitmap bitmapImage){
-//        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-//        // path to /data/data/yourapp/app_data/imageDir
-//        File directory = cw.getDir("player1CapturedImageDirectory", Context.MODE_PRIVATE);
-//        // Create imageDir
-//        File mypath=new File(directory,"player1CapturedImage.jpg");
-//
-//        FileOutputStream fos = null;
-//        try {
-//            fos = new FileOutputStream(mypath);
-//            // Use the compress method on the BitMap object to write image to the OutputStream
-//            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                fos.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return mypath;
-//    }
+
     @Override
     public void onClick(View view) {
         SharedPreferences player1SharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
@@ -129,7 +102,7 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
                 editor.commit();
                 break;
             default:
-                Toast.makeText(PickYourIconActivityPlayer1.this, "Something Wrong happened", Toast.LENGTH_SHORT).show();break;
+                Toast.makeText(PickYourIconActivityPlayer1.this, getString(R.string.activity_pickYourIconActivityPlayer1_Toast_something_wrong_happened), Toast.LENGTH_SHORT).show();break;
 
         }
 
