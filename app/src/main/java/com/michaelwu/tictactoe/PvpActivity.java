@@ -154,7 +154,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     }
     private void importTimeConstraint(){
         SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
-        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
+        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5);
         timeConstraintTextView.setText(""+timeConstraint);
     }
 
@@ -266,7 +266,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
         switch (v.getId())
         {
             case R.id.PvpActivity_button_back:
-                startActivity(new Intent(this,MainActivity.class));finish();runningPvpTimer = false;break;
+                startActivity(new Intent(this,MainActivity.class));finish();cancelCountDownTimer();break;
                 //ADDITION
             case R.id.PvpActivity_imageButton_00:
                 cancelCountDownTimer();imageButtonClicked(imageButton00,"00");break;
