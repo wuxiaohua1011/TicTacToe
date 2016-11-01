@@ -142,7 +142,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     }
     private void importTimeConstraint(){
         SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
-        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
+        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5);
         timeConstraintTextView.setText(""+timeConstraint);
     }
     private void tempWait() {
