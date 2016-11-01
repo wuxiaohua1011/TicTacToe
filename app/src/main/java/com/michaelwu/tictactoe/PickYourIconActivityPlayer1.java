@@ -21,6 +21,7 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
     static final int CAM_REQUEST = 1;
     static final String PLAYER1_CAMERA_USED="PLAYER_1_CAMERA_USED";
     private boolean camera_used = false;
+    private int player2ImagePath;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,60 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
         camera_used=false;
         wireWidget();
         setListener();
+        checkImageDuplicate();
+    }
+
+    private void checkImageDuplicate() {
+        importPlayer2Pic();
+        if (player2ImagePath == 0)
+        {
+
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_lizard)
+        {
+            lizardButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_corgi)
+        {
+            corgiButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_kitten)
+        {
+            kittenButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_tesla)
+        {
+            teslaButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_bunny)
+        {
+            bunnyButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_clown)
+        {
+            clownButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_O)
+        {
+            oButton.setClickable(false);
+        }
+        if (player2ImagePath == R.id.activity_pick_your_icon_player_2_imageButton_X)
+        {
+            xButton.setClickable(false);
+        }
+    }
+
+    private void importPlayer2Pic() {
+        SharedPreferences sharePreferences = getSharedPreferences("player2pic",MODE_PRIVATE);
+        String path = sharePreferences.getString("player2pic","nothing");
+
+        if (path.equals("nothing")){
+            player2ImagePath = 0;
+        }
+        else{
+            player2ImagePath = Integer.parseInt(path);
+        }
+
     }
 
     private void wireWidget() {
