@@ -71,35 +71,35 @@ public class PickYourIconActivityPlayer1 extends AppCompatActivity implements Vi
                 startActivityForResult(camera_intent, CAM_REQUEST);break;
             case R.id.activity_pick_your_icon_player_1_imageButton_lizard:
                 editor.putString("player1pic","" + R.drawable.lizard);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_corgi:
                 editor.putString("player1pic","" + R.drawable.corgi);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_kitten:
                 editor.putString("player1pic","" + R.drawable.kitten);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_tesla:
                 editor.putString("player1pic","" + R.drawable.tesla);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_bunny:
                 editor.putString("player1pic","" + R.drawable.bunny);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_clown:
                 editor.putString("player1pic","" + R.drawable.clown);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_X:
                 editor.putString("player1pic","" + R.drawable.x);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             case R.id.activity_pick_your_icon_player_1_imageButton_O:
                 editor.putString("player1pic","" + R.drawable.o);
-                editor.commit();
+                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
                 break;
             default:
                 Toast.makeText(PickYourIconActivityPlayer1.this, getString(R.string.activity_pickYourIconActivityPlayer1_Toast_something_wrong_happened), Toast.LENGTH_SHORT).show();break;
