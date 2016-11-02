@@ -22,5 +22,6 @@
     <string name="activity_pvp_TextView_timeConstraint">Time left: </string>
     <string name="activity_pvp_Toast_playerWon">The winner is: Player </string>
     <string name="activity_pvp_Toast_draw">Draw</string>
+    <string name="activity_pickYourIconPlayer1_and_2_imageDuplicate_toast">Choose Again</string>
 
 </resources>

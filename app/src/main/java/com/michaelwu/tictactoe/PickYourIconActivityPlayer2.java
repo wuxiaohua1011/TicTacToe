@@ -32,6 +32,21 @@ public class PickYourIconActivityPlayer2 extends AppCompatActivity implements Vi
         setListener();
     }
 
+    private boolean checkSameImageWithPlayer1(int imageId){
+        SharedPreferences sharedPreferences = getSharedPreferences("player1pic",MODE_PRIVATE);
+        String imagePath = sharedPreferences.getString("player1pic","nothing");
+
+        if (PickYourIconActivityPlayer1.camera_used){
+            return false;
+        }
+        else if (Integer.parseInt(imagePath) == imageId){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     private void wireWidget() {
         backButton = (Button) findViewById(R.id.activity_pick_your_icon_player_2_button_back);
         cameraButton = (ImageButton) findViewById(R.id.activity_pick_your_icon_player_2_imageButton_selfie);
@@ -73,36 +88,93 @@ public class PickYourIconActivityPlayer2 extends AppCompatActivity implements Vi
                 startActivityForResult(camera_intent, CAM_REQUEST);
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_lizard:
-                editor.putString("player2pic","" + R.drawable.lizard);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.lizard)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    editor.putString("player2pic", "" + R.drawable.lizard);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_corgi:
-                editor.putString("player2pic","" + R.drawable.corgi);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.corgi)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    editor.putString("player2pic", "" + R.drawable.corgi);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_kitten:
-                editor.putString("player2pic","" + R.drawable.kitten);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.kitten)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    editor.putString("player2pic", "" + R.drawable.kitten);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_tesla:
-                editor.putString("player2pic","" + R.drawable.tesla);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.tesla)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    editor.putString("player2pic", "" + R.drawable.tesla);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_bunny:
-                editor.putString("player2pic","" + R.drawable.bunny);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.bunny)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    editor.putString("player2pic", "" + R.drawable.bunny);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_clown:
-                editor.putString("player2pic","" + R.drawable.clown);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.clown)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    editor.putString("player2pic", "" + R.drawable.clown);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_X:
-                editor.putString("player2pic","" + R.drawable.x);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.x)) {
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    editor.putString("player2pic", "" + R.drawable.x);
+                    editor.commit();
+                    startActivity(new Intent(this, SettingActivity.class));
+                    finish();
+                }
                 break;
             case R.id.activity_pick_your_icon_player_2_imageButton_O:
-                editor.putString("player2pic","" + R.drawable.o);
-                editor.commit();startActivity(new Intent(this,SettingActivity.class));finish();
+                if (checkSameImageWithPlayer1(R.drawable.o)){
+                    Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconPlayer1_and_2_imageDuplicate_toast), Toast.LENGTH_SHORT).show();
+                }
+            else{
+                editor.putString("player2pic", "" + R.drawable.o);
+                editor.commit();
+                startActivity(new Intent(this, SettingActivity.class));
+                finish();
+                }
                 break;
             default:
                 Toast.makeText(PickYourIconActivityPlayer2.this, getString(R.string.activity_pickYourIconActivityPlayer2_Toast_something_wrong_happened) , Toast.LENGTH_SHORT).show();
