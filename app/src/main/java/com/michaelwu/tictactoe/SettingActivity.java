@@ -33,7 +33,6 @@ private Button backButton, player1Button,player2Button;
         numberPicker.setMinValue(1);
         numberPicker.setMaxValue(60);
        numberPicker.setValue(5);
-
     }
 
     private void changeP2Image() {

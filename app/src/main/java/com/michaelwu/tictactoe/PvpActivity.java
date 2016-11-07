@@ -61,7 +61,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             player2IconResourcePathInt = intPath;
         }
         else{
-            player2IconResourcePathInt = R.mipmap.o;
+            player2IconResourcePathInt = R.drawable.o;
         }
 
     }
@@ -78,7 +78,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
             player1IconResourcePathInt = intPath;
         }
         else{
-            player1IconResourcePathInt = R.mipmap.x;
+            player1IconResourcePathInt = R.drawable.x;
         }
 
     }
@@ -145,7 +145,7 @@ public class PvpActivity extends AppCompatActivity implements View.OnClickListen
     }
     private void importTimeConstraint(){
         SharedPreferences sharedPreferences = getSharedPreferences(SettingActivity.TIME_CONSTRAINT,MODE_PRIVATE);
-        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5000);
+        timeConstraint=sharedPreferences.getInt(SettingActivity.TIME_CONSTRAINT,5);
         timeConstraintTextView.setText(""+timeConstraint);
     }
     private void tempWait() {
