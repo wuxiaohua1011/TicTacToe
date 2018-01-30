@@ -11,7 +11,5 @@ August 2015 - December 2015
 
 Made as the final project for the Project Lead The Way Computer Science -- Android developlent class
 
-Used TensorFlow as our machine learning library
-
 Used Android Studio as our IDE
 
